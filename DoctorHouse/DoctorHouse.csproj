@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DoctorHouse.DAL\DoctorHouse.DAL.csproj" />
+    <ProjectReference Include="..\DoctorHouse.Infrastructure\DoctorHouse.Infrastructure.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
