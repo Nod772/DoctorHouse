@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoctorHouse", "DoctorHouse\DoctorHouse.csproj", "{6B233DD1-58B2-4173-B57E-46A0C1F21BD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoctorHouse.DAL", "DoctorHouse.DAL\DoctorHouse.DAL.csproj", "{D86A56A7-6A92-4D03-9D2D-DAFFE14692C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B233DD1-58B2-4173-B57E-46A0C1F21BD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B233DD1-58B2-4173-B57E-46A0C1F21BD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B233DD1-58B2-4173-B57E-46A0C1F21BD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B233DD1-58B2-4173-B57E-46A0C1F21BD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86A56A7-6A92-4D03-9D2D-DAFFE14692C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86A56A7-6A92-4D03-9D2D-DAFFE14692C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86A56A7-6A92-4D03-9D2D-DAFFE14692C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86A56A7-6A92-4D03-9D2D-DAFFE14692C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8AF2CBD3-0DB4-46BE-8F37-40E3C3A343D4}
+	EndGlobalSection
+EndGlobal
