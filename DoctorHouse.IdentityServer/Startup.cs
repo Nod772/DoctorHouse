@@ -27,6 +27,7 @@ namespace DoctorHouse.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
             // configure identity server with in-memory stores, keys, clients and resources
             var builder = services.AddIdentityServer()
                   .AddInMemoryIdentityResources(Config.IdentityResources)
@@ -35,7 +36,7 @@ namespace DoctorHouse.IdentityServer
                   //.AddInMemoryClients(ConfigGlobal.Clients)
                   .AddTestUsers(TestUsers.Users);
 
-
+            builder.AddDeveloperSigningCredential();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +46,16 @@ namespace DoctorHouse.IdentityServer
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
+
             app.UseIdentityServer();
-            //   app.UseRouting();
+            
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
             //
             //   app.UseEndpoints(endpoints =>
             //   {
