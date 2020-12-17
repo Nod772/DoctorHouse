@@ -1,5 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using DoctorHouse.DAL;
 using DoctorHouse.DAL.Entity;
+using DoctorHouse.DAL.Helper;
 using DoctorHouse.Helper;
 using DoctorHouse.Infrastructure.Interfaces;
 using DoctorHouse.Infrastructure.Services;
@@ -7,7 +13,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,11 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
+
 
 namespace DoctorHouse
 {
@@ -35,14 +36,16 @@ namespace DoctorHouse
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
             services.AddDbContext<EfContext>(options =>
-               options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+              options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<DbUser, DbRole>(options => options.Stores.MaxLengthForKeys = 128)
-             .AddEntityFrameworkStores<EfContext>()
-             .AddDefaultTokenProviders();
+            services.AddIdentity<DbUser, DbRole>(options =>
+                    options.Stores.MaxLengthForKeys = 128)
+                .AddEntityFrameworkStores<EfContext>()
+                .AddDefaultTokenProviders();
+
+
+            services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -50,33 +53,6 @@ namespace DoctorHouse
                 configuration.RootPath = "client-app/build";
             });
 
-
-
-
-            // services.AddDbContext<DbContext>(opt =>
-            //    opt.UseSqlServer(Configuration["ConnectionString"],
-            //    b => b.MigrationsAssembly("CourceWork"))
-            //   );
-            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<String>("JwtKey")));
-            services.AddScoped<IJwtTokenService, JwtTokenService>();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
-            {
-                cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    IssuerSigningKey = signinKey,
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = TimeSpan.Zero
-                };
-            });
 
             services.AddSwaggerGen(c =>
             {
@@ -120,6 +96,28 @@ namespace DoctorHouse
 
             });
 
+
+
+            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<String>("JwtKey")));
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = signinKey,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -130,6 +128,7 @@ namespace DoctorHouse
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Deadlines.API v1"));
+
             }
             else
             {

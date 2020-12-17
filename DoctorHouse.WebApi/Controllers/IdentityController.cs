@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DoctorHouse.IdentityServer.Controllers
+namespace DoctorHouse.WebApi.Controllers
 {
     [Route("identity")]
     [Authorize]
-    public class IdentityController : ControllerBase
+    public class IdentityController : Controller
     {
         [HttpGet]
         public IActionResult Get()
